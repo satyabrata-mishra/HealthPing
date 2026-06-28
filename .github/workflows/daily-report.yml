@@ -2,8 +2,8 @@ name: HealthPing Daily Report
 
 on:
   schedule:
-    # Midnight UTC
-    - cron: "0 0 * * *"
+    # Midnight IST (6:30 PM UTC)
+    - cron: "30 18 * * *"
 
   workflow_dispatch:
 
