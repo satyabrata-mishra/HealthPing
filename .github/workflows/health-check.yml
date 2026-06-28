@@ -2,42 +2,60 @@ name: HealthPing Check
 
 on:
   schedule:
-    # Run every 3 hrs
-    - cron: '0 */3 * * *'
-  workflow_dispatch: # Allows manual trigger
+    # Every 3 hours
+    - cron: "0 */3 * * *"
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: healthping-check
+  cancel-in-progress: false
 
 jobs:
   health-check:
+    name: Service Health Check
     runs-on: ubuntu-latest
 
+    timeout-minutes: 10
+
     steps:
-      - name: Checkout Code
+      - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
 
       - name: Install uv
         uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true
 
-      - name: Set up Python 3.12
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Install dependencies
-        run: uv sync
+      - name: Install Dependencies
+        run: uv sync --frozen
 
       - name: Run Health Checks
         env:
           SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
-        run: uv run python main.py --mode check
+        run: |
+          uv run python main.py --mode check
 
-      - name: Upload Report Artifacts
+      - name: Upload Reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: healthping-reports
+          name: healthping-health-reports
           path: report_outputs/
+          if-no-files-found: ignore
           retention-days: 7
+
+      - name: Workflow Summary
+        if: always()
+        run: |
+          echo "Health check completed." >> $GITHUB_STEP_SUMMARY
