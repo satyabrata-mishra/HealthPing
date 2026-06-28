@@ -11,7 +11,7 @@ Unlike traditional monitoring suites that run persistent background daemons, Hea
 - **Concurrent Async Monitoring**: Uses `asyncio` and `httpx` to ping dozens of endpoints concurrently, adhering to configurable concurrency limits.
 - **Robust Retry Handler**: Supports custom retry counts per service, implemented with **exponential backoff**.
 - **Comprehensive Reports**: Automatically generates HTML, CSV, and JSON reports detailing latencies, status codes, and failure reasons.
-- **Dynamic Trend Aggregation**: Automatically aggregates historical JSON reports to output daily (24h) and weekly (7d) trend statistics.
+- **Dynamic Trend Aggregation**: Automatically aggregates historical JSON reports to output daily (24h) trend statistics.
 - **Professional Alerts**: Generates and sends styled HTML emails for instant outage warnings and periodic reports.
 - **Zero-Daemon Architecture**: Fully configured for execution in stateless serverless runners like GitHub Actions.
 
@@ -57,7 +57,9 @@ HealthPing/
 │   ├── daily_report.html        # Daily summary email template
 │   └── weekly_report.html       # Weekly summary email template
 ├── main.py                      # Orchestrator CLI entrypoint
+├── pyproject.toml               # Project Configuration Details
 ├── requirements.txt             # Flat dependency file
+├── uv.lock                      # UV enviornment details
 └── README.md
 ```
 
@@ -69,7 +71,7 @@ HealthPing recommends using the fast **`uv`** package manager.
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/HealthPing.git
+git clone https://github.com/satyabrata-mishra/HealthPing.git
 cd HealthPing
 ```
 
@@ -103,56 +105,6 @@ Configure the HTTP endpoints you wish to monitor. Supports GET/POST, custom time
         {
             "name": "VoyageAI Backend",
             "url": "https://voyageai-backend-rg03.onrender.com/",
-            "method": "GET",
-            "timeout": 60,
-            "retries": 3,
-            "expected_status": 200,
-            "enabled": true,
-            "notify_on_failure": true
-        },
-        {
-            "name": "Email Automation Tool",
-            "url": "https://automated-email-sender.onrender.com/",
-            "method": "GET",
-            "timeout": 60,
-            "retries": 3,
-            "expected_status": 200,
-            "enabled": true,
-            "notify_on_failure": true
-        },
-        {
-            "name": "Memories Application Backend",
-            "url": "https://blog-application-0j9b.onrender.com/",
-            "method": "GET",
-            "timeout": 60,
-            "retries": 3,
-            "expected_status": 200,
-            "enabled": true,
-            "notify_on_failure": true
-        },
-        {
-            "name": "Attendance Manager App Backend",
-            "url": "https://attendance-manager-app.onrender.com/",
-            "method": "GET",
-            "timeout": 60,
-            "retries": 3,
-            "expected_status": 200,
-            "enabled": true,
-            "notify_on_failure": true
-        },
-        {
-            "name": "Chatroom and Videoroom Backend",
-            "url": "https://chat-app-ll19.onrender.com/",
-            "method": "GET",
-            "timeout": 60,
-            "retries": 3,
-            "expected_status": 200,
-            "enabled": true,
-            "notify_on_failure": true
-        },
-        {
-            "name": "Netflix Clone Backend",
-            "url": "https://netflix-clone-1pu9.onrender.com/",
             "method": "GET",
             "timeout": 60,
             "retries": 3,
@@ -205,29 +157,6 @@ uv run python main.py --mode daily
 # Run checks, compile stats for the last 7 days, and email a weekly summary
 uv run python main.py --mode weekly
 ```
-
----
-
-## 📈 Example Reports & Visuals
-
-### HTML Dashboard Report (`reports/report_latest.html`)
-The dashboard is styled with modern dark-mode aesthetics:
-
-```
-+--------------------------------------------------------------+
-| HealthPing Dashboard                        2026-06-28 UTC   |
-|                                                              |
-| [ Services: 1 ]   [ Healthy: 1 ]   [ Failed: 0 ]   [ Latency: 0.12s ]
-|                                                              |
-| Endpoints Status:                                            |
-| Name             URL             Status     Code    Latency  |
-| VoyageAI Backend https://...     HEALTHY    200     0.1245s  |
-+--------------------------------------------------------------+
-```
-
-*Dashboard Mockup Screenshot Placeholder:*
-![HTML Report Mockup](https://raw.githubusercontent.com/username/project/main/screenshots/dashboard_mockup.png)
-
 ---
 
 ## 🤖 GitHub Actions Integration
@@ -236,20 +165,11 @@ HealthPing integrates workflows configured under `.github/workflows/`:
 
 1. **`health-check.yml`**: Runs every 10 minutes, triggers checking, and emails failure alerts immediately if endpoints fail.
 2. **`daily-report.yml`**: Runs daily to email 24h aggregate trends.
-3. **`weekly-report.yml`**: Runs every Sunday to email weekly uptime rates.
 
 To deploy, configure the following secrets in your GitHub Repository under **Settings > Secrets and variables > Actions**:
 - `SMTP_USERNAME`
 - `SMTP_PASSWORD`
 - `EMAIL_RECEIVER`
-
----
-
-## 🧪 Running Tests
-To run the full suite of unit tests verifying checker concurrency, configuration loader schemas, retry backoffs, reports, and emails:
-```bash
-uv run pytest -v
-```
 
 ---
 
@@ -269,8 +189,3 @@ Contributions are welcome! Please submit a PR or open an issue for feature reque
 ## ✍️ Author
 
 - **Satyabrata Mishra**
-
----
-
-## 📄 License
-This project is licensed under the MIT License - see the LICENSE file for details.
