@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>HealthPing Status Update</title>
+</head>
+<body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9fafb; margin: 0; padding: 0; color: #1f2937; -webkit-font-smoothing: antialiased;">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f9fafb; padding: 20px 0;">
+        <tr>
+            <td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="600" style="background-color: #ffffff; border-radius: 8px; border: 1px solid #e5e7eb; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); overflow: hidden;">
+                    
+                    <!-- Dynamic Header based on failures -->
+                    {% if report.failed > 0 %}
+                    <tr>
+                        <td style="background-color: #ef4444; padding: 30px; text-align: center;">
+                            <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.025em; text-transform: uppercase;">🚨 Outage Detected</h1>
+                            <p style="color: #fee2e2; margin: 5px 0 0 0; font-size: 14px;">{{ report.failed }} of {{ report.total_services }} services are down</p>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td style="background-color: #10b981; padding: 30px; text-align: center;">
+                            <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.025em; text-transform: uppercase;">🟢 All Services Operational</h1>
+                            <p style="color: #d1fae5; margin: 5px 0 0 0; font-size: 14px;">HealthPing verified all endpoints are healthy</p>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    
+                    <!-- Email Content -->
+                    <tr>
+                        <td style="padding: 30px;">
+                            <p style="margin: 0 0 20px 0; font-size: 15px; line-height: 1.5; color: #4b5563;">
+                                HealthPing executed its service health validation cycle. Below is the summary of operational and failing endpoints.
+                            </p>
+                            
+                            <!-- Section: Failed Services -->
+                            {% if report.failed > 0 %}
+                            <h2 style="font-size: 16px; font-weight: 600; color: #b91c1c; margin: 0 0 10px 0; border-bottom: 2px solid #fecaca; padding-bottom: 5px;">⚠️ Outages ({{ report.failed }})</h2>
+                            <table border="0" cellpadding="5" cellspacing="0" width="100%" style="font-size: 14px; margin-bottom: 25px;">
+                                {% for r in report.results %}
+                                    {% if r.status == 'FAILED' %}
+                                    <tr>
+                                        <td style="padding: 10px; border-bottom: 1px solid #fee2e2; background-color: #faf5f5; font-weight: 600; color: #991b1b; width: 45%;">
+                                            {{ r.service_name }}
+                                            <div style="font-size: 11px; font-weight: 400; color: #9ca3af; font-family: monospace;">{{ r.url }}</div>
+                                        </td>
+                                        <td style="padding: 10px; border-bottom: 1px solid #fee2e2; background-color: #faf5f5; color: #b91c1c; font-family: monospace; font-size: 12px; vertical-align: middle;">
+                                            HTTP {{ r.http_status_code or 'N/A' }} | {{ "%.4f"|format(r.latency) }}s<br>
+                                            <span style="font-size: 11px; font-weight: 600;">Error: {{ r.failure_reason }}</span>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            </table>
+                            {% endif %}
+
+                            <!-- Section: Operational Services -->
+                            <h2 style="font-size: 16px; font-weight: 600; color: #065f46; margin: 0 0 10px 0; border-bottom: 2px solid #a7f3d0; padding-bottom: 5px;">🟢 Operational ({{ report.healthy }})</h2>
+                            <table border="0" cellpadding="5" cellspacing="0" width="100%" style="font-size: 14px; margin-bottom: 15px;">
+                                {% for r in report.results %}
+                                    {% if r.status == 'HEALTHY' %}
+                                    <tr>
+                                        <td style="padding: 8px 10px; border-bottom: 1px solid #ecfdf5; font-weight: 600; color: #374151; width: 60%;">
+                                            {{ r.service_name }}
+                                            <div style="font-size: 11px; font-weight: 400; color: #9ca3af; font-family: monospace;">{{ r.url }}</div>
+                                        </td>
+                                        <td style="padding: 8px 10px; border-bottom: 1px solid #ecfdf5; text-align: center; width: 20%;">
+                                            <span style="background-color: #d1fae5; color: #065f46; font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 9999px; text-transform: uppercase;">Healthy</span>
+                                        </td>
+                                        <td style="padding: 8px 10px; border-bottom: 1px solid #ecfdf5; text-align: right; font-family: monospace; color: #4b5563; width: 20%;">
+                                            {{ "%.4f"|format(r.latency) }}s
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            </table>
+
+                            <p style="margin: 20px 0 0 0; font-size: 13px; color: #9ca3af; font-style: italic;">
+                                Cycle Duration: {{ report.execution_time }}s | Timestamp: {{ report.timestamp }}
+                            </p>
+                        </td>
+                    </tr>
+                    
+                    <!-- Footer -->
+                    <tr>
+                        <td style="background-color: #f3f4f6; padding: 20px; text-align: center; border-top: 1px solid #e5e7eb;">
+                            <p style="margin: 0; font-size: 12px; color: #9ca3af;">
+                                This is an automated unified report from HealthPing.
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

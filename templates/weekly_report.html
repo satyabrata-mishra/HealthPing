@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>HealthPing Weekly Report</title>
+</head>
+<body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9fafb; margin: 0; padding: 0; color: #1f2937;">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f9fafb; padding: 20px 0;">
+        <tr>
+            <td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="600" style="background-color: #ffffff; border-radius: 8px; border: 1px solid #e5e7eb; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); overflow: hidden;">
+                    <!-- Teal Header -->
+                    <tr>
+                        <td style="background-color: #0d9488; padding: 30px; text-align: center;">
+                            <h1 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.025em;">📊 HealthPing Weekly Summary</h1>
+                            <p style="color: #ccfbf1; margin: 5px 0 0 0; font-size: 14px;">Weekly service status, uptime, & performance trends</p>
+                        </td>
+                    </tr>
+                    
+                    <!-- Email Content -->
+                    <tr>
+                        <td style="padding: 30px;">
+                            <p style="margin: 0 0 20px 0; font-size: 15px; line-height: 1.5; color: #4b5563;">
+                                Here is the weekly summary of service performance and health checks compiled by HealthPing.
+                            </p>
+
+                            <!-- Stat Grid (Table layout for email client compatibility) -->
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 25px;">
+                                <tr>
+                                    <!-- Total Services -->
+                                    <td width="31%" style="background-color: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 6px; padding: 15px; text-align: center;">
+                                        <div style="font-size: 12px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 5px;">Endpoints</div>
+                                        <div style="font-size: 20px; font-weight: 700; color: #111827;">{{ report.total_services }}</div>
+                                    </td>
+                                    <td width="3%">&nbsp;</td>
+                                    <!-- Healthy -->
+                                    <td width="31%" style="background-color: #ecfdf5; border: 1px solid #d1fae5; border-radius: 6px; padding: 15px; text-align: center;">
+                                        <div style="font-size: 12px; font-weight: 600; color: #047857; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 5px;">Healthy</div>
+                                        <div style="font-size: 20px; font-weight: 700; color: #059669;">{{ report.healthy }}</div>
+                                    </td>
+                                    <td width="3%">&nbsp;</td>
+                                    <!-- Failed -->
+                                    <td width="31%" style="background-color: {% if report.failed > 0 %}#fef2f2{% else %}#f3f4f6{% endif %}; border: 1px solid {% if report.failed > 0 %}#fee2e2{% else %}#e5e7eb{% endif %}; border-radius: 6px; padding: 15px; text-align: center;">
+                                        <div style="font-size: 12px; font-weight: 600; color: {% if report.failed > 0 %}#b91c1c{% else %}#6b7280{% endif %}; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 5px;">Failed</div>
+                                        <div style="font-size: 20px; font-weight: 700; color: {% if report.failed > 0 %}#dc2626{% else %}#111827{% endif %};">{{ report.failed }}</div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <h2 style="font-size: 16px; font-weight: 600; color: #111827; margin: 0 0 12px 0; border-bottom: 1px solid #e5e7eb; padding-bottom: 6px;">Current Endpoint Status</h2>
+                            
+                            <table border="0" cellpadding="5" cellspacing="0" width="100%" style="font-size: 14px; margin-bottom: 25px;">
+                                <tr style="background-color: #f9fafb; text-align: left; font-weight: 600; color: #4b5563;">
+                                    <th style="padding: 8px 10px; border-bottom: 1px solid #e5e7eb;">Service</th>
+                                    <th style="padding: 8px 10px; border-bottom: 1px solid #e5e7eb; text-align: center;">Status</th>
+                                    <th style="padding: 8px 10px; border-bottom: 1px solid #e5e7eb; text-align: right;">Latency</th>
+                                </tr>
+                                {% for r in report.results %}
+                                <tr>
+                                    <td style="padding: 10px; border-bottom: 1px solid #f3f4f6; font-weight: 600; color: #374151;">
+                                        {{ r.service_name }}
+                                        <div style="font-size: 11px; font-weight: 400; color: #9ca3af; font-family: monospace;">{{ r.url }}</div>
+                                    </td>
+                                    <td style="padding: 10px; border-bottom: 1px solid #f3f4f6; text-align: center; vertical-align: middle;">
+                                        {% if r.status == 'HEALTHY' %}
+                                        <span style="background-color: #d1fae5; color: #065f46; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 9999px; text-transform: uppercase;">Healthy</span>
+                                        {% else %}
+                                        <span style="background-color: #fee2e2; color: #991b1b; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 9999px; text-transform: uppercase;">Failed</span>
+                                        {% endif %}
+                                    </td>
+                                    <td style="padding: 10px; border-bottom: 1px solid #f3f4f6; text-align: right; font-family: monospace; color: #4b5563;">
+                                        {{ "%.4f"|format(r.latency) }}s
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+
+                            <!-- Historical Aggregates (Optional) -->
+                            {% if history %}
+                            <h2 style="font-size: 16px; font-weight: 600; color: #111827; margin: 0 0 12px 0; border-bottom: 1px solid #e5e7eb; padding-bottom: 6px;">7-Day Trend Aggregation</h2>
+                            <table border="0" cellpadding="10" cellspacing="0" width="100%" style="background-color: #f0fdfa; border: 1px solid #ccfbf1; border-radius: 6px; font-size: 14px; margin-bottom: 25px;">
+                                <tr>
+                                    <td>
+                                        <div style="line-height: 1.6; color: #0f766e;">
+                                            • Success Rate (Uptime): <strong>{{ history.success_rate }}%</strong> over <strong>{{ history.total_runs }}</strong> checks<br>
+                                            • Average Latency: <strong>{{ "%.4f"|format(history.average_latency) }}s</strong><br>
+                                            {% if history.failures_by_service %}
+                                            • Outages recorded:
+                                            <ul style="margin: 5px 0 0 20px; padding: 0;">
+                                                {% for svc, count in history.failures_by_service.items() %}
+                                                <li>{{ svc }}: failed {{ count }} time(s)</li>
+                                                {% endfor %}
+                                            </ul>
+                                            {% else %}
+                                            • No service outages recorded in the last 7 days.
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            {% endif %}
+
+                            <p style="margin: 0; font-size: 13px; color: #9ca3af; font-style: italic;">
+                                Report generated at: {{ report.timestamp }}
+                            </p>
+                        </td>
+                    </tr>
+                    
+                    <!-- Footer -->
+                    <tr>
+                        <td style="background-color: #f3f4f6; padding: 20px; text-align: center; border-top: 1px solid #e5e7eb;">
+                            <p style="margin: 0; font-size: 12px; color: #9ca3af;">
+                                Automated Health Monitoring by HealthPing via GitHub Actions.
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

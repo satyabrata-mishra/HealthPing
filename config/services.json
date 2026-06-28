@@ -1,0 +1,64 @@
+{
+    "services": [
+        {
+            "name": "VoyageAI Backend",
+            "url": "https://voyageai-backend-rg03.onrender.com/",
+            "method": "GET",
+            "timeout": 60,
+            "retries": 3,
+            "expected_status": 200,
+            "enabled": true,
+            "notify_on_failure": true
+        },
+        {
+            "name": "Email Automation Tool",
+            "url": "https://automated-email-sender.onrender.com/",
+            "method": "GET",
+            "timeout": 60,
+            "retries": 3,
+            "expected_status": 200,
+            "enabled": true,
+            "notify_on_failure": true
+        },
+        {
+            "name": "Memories Application Backend",
+            "url": "https://blog-application-0j9b.onrender.com/",
+            "method": "GET",
+            "timeout": 60,
+            "retries": 3,
+            "expected_status": 200,
+            "enabled": true,
+            "notify_on_failure": true
+        },
+        {
+            "name": "Attendance Manager App Backend",
+            "url": "https://attendance-manager-app.onrender.com/",
+            "method": "GET",
+            "timeout": 60,
+            "retries": 3,
+            "expected_status": 200,
+            "enabled": true,
+            "notify_on_failure": true
+        },
+        {
+            "name": "Chatroom and Videoroom Backend",
+            "url": "https://chat-app-ll19.onrender.com/",
+            "method": "GET",
+            "timeout": 60,
+            "retries": 3,
+            "expected_status": 200,
+            "enabled": true,
+            "notify_on_failure": true
+        },
+        {
+            "name": "Netflix Clone Backend",
+            "url": "https://netflix-clone-1pu9.onrender.com/",
+            "method": "GET",
+            "timeout": 60,
+            "retries": 3,
+            "expected_status": 200,
+            "enabled": true,
+            "notify_on_failure": true
+        }
+    ]
+}

@@ -1,0 +1,7 @@
+httpx
+pydantic
+jinja2
+python-dotenv
+rich
+pytest
+pytest-asyncio

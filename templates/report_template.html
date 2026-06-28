@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthPing Status Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(22, 28, 45, 0.7);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.15);
+            --success: #10b981;
+            --success-glow: rgba(16, 185, 129, 0.1);
+            --danger: #ef4444;
+            --danger-glow: rgba(239, 68, 68, 0.1);
+            --warning: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 2.5rem 1.5rem;
+            line-height: 1.5;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 1.5rem;
+        }
+
+        .logo-section h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            background: linear-gradient(135deg, #a5b4fc 0%, #6366f1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-section p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        .timestamp-badge {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .timestamp-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--success);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px var(--success);
+        }
+
+        /* Metrics Cards */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            backdrop-filter: blur(12px);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .card-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .card-value.success {
+            color: var(--success);
+            text-shadow: 0 0 16px var(--success-glow);
+        }
+
+        .card-value.danger {
+            color: var(--danger);
+            text-shadow: 0 0 16px var(--danger-glow);
+        }
+
+        .card-subtitle {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Results Table Card */
+        .table-card {
+            overflow: hidden;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 1rem;
+            backdrop-filter: blur(12px);
+        }
+
+        .table-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            background-color: rgba(15, 23, 42, 0.3);
+            padding: 1rem 1.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--card-border);
+            font-size: 0.9375rem;
+            vertical-align: middle;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background-color: rgba(255, 255, 255, 0.01);
+        }
+
+        .service-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .service-url {
+            color: var(--text-secondary);
+            font-size: 0.8125rem;
+            font-family: monospace;
+            max-width: 250px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .service-url a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .service-url a:hover {
+            text-decoration: underline;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .badge-healthy {
+            background-color: var(--success-glow);
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .badge-failed {
+            background-color: var(--danger-glow);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .latency-value {
+            font-family: monospace;
+            font-weight: 500;
+        }
+
+        .reason-text {
+            color: var(--danger);
+            font-size: 0.8125rem;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .footer {
+            margin-top: 3rem;
+            text-align: center;
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-section">
+                <h1>HealthPing</h1>
+                <p>Centralized Service Health Monitoring</p>
+            </div>
+            <div class="timestamp-badge">
+                <span class="timestamp-dot"></span>
+                <span>{{ formatted_time }}</span>
+            </div>
+        </header>
+
+        <main>
+            <!-- Metrics Panel -->
+            <div class="metrics-grid">
+                <div class="card">
+                    <div class="card-label">Services</div>
+                    <div class="card-value">{{ report.total_services }}</div>
+                    <div class="card-subtitle">Total monitored endpoints</div>
+                </div>
+                <div class="card">
+                    <div class="card-label">Healthy</div>
+                    <div class="card-value success">{{ report.healthy }}</div>
+                    <div class="card-subtitle">All checks successful</div>
+                </div>
+                <div class="card">
+                    <div class="card-label">Failed</div>
+                    <div class="card-value {% if report.failed > 0 %}danger{% endif %}">{{ report.failed }}</div>
+                    <div class="card-subtitle">Endpoints down/offline</div>
+                </div>
+                <div class="card">
+                    <div class="card-label">Avg Latency</div>
+                    <div class="card-value">{{ report.average_response_time }}s</div>
+                    <div class="card-subtitle">Cycle time: {{ report.execution_time }}s</div>
+                </div>
+            </div>
+
+            <!-- Perf Extremes -->
+            <div class="metrics-grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 2.5rem;">
+                <div class="card">
+                    <div class="card-label">🚀 Fastest Response</div>
+                    <div class="card-subtitle" style="font-size: 1.125rem; font-weight: 600; color: var(--text-primary); margin-top: 0.5rem;">
+                        {{ report.fastest_service or 'N/A' }}
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-label">🐢 Slowest Response</div>
+                    <div class="card-subtitle" style="font-size: 1.125rem; font-weight: 600; color: var(--text-primary); margin-top: 0.5rem;">
+                        {{ report.slowest_service or 'N/A' }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services Table -->
+            <div class="table-card">
+                <div class="table-header">
+                    <h2>Monitored Endpoints</h2>
+                    <span style="font-size: 0.875rem; color: var(--text-secondary);">Showing current status</span>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Service Name</th>
+                                <th>Endpoint URL</th>
+                                <th>Status</th>
+                                <th>HTTP Code</th>
+                                <th>Response Time</th>
+                                <th>Retries</th>
+                                <th>Details / Failure Reason</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for r in report.results %}
+                            <tr>
+                                <td>
+                                    <span class="service-name">{{ r.service_name }}</span>
+                                </td>
+                                <td>
+                                    <div class="service-url">
+                                        <a href="{{ r.url }}" target="_blank" rel="noopener noreferrer">{{ r.url }}</a>
+                                    </div>
+                                </td>
+                                <td>
+                                    {% if r.status == 'HEALTHY' %}
+                                    <span class="badge badge-healthy">Healthy</span>
+                                    {% else %}
+                                    <span class="badge badge-failed">Failed</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <span class="latency-value">{{ r.http_status_code or 'N/A' }}</span>
+                                </td>
+                                <td>
+                                    <span class="latency-value">{{ "%.4f"|format(r.latency) }}s</span>
+                                </td>
+                                <td>
+                                    <span>{{ r.retry_count }}</span>
+                                </td>
+                                <td>
+                                    {% if r.failure_reason %}
+                                    <span class="reason-text" title="{{ r.failure_reason }}">{{ r.failure_reason }}</span>
+                                    {% else %}
+                                    <span style="color: var(--text-secondary); font-size: 0.8125rem;">—</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>Generated by <a href="https://github.com" target="_blank">HealthPing</a> | Automated via GitHub Actions</p>
+        </footer>
+    </div>
+</body>
+</html>

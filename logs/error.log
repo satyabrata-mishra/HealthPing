@@ -1,0 +1,58 @@
+[2026-06-28 22:59:17] WARNING [monitor.checker:98] Service 'VoyageAI Backend' returned unexpected status 503 on attempt 0: Expected status 200, got 503
+[2026-06-28 22:59:20] WARNING [monitor.checker:98] Service 'VoyageAI Backend' returned unexpected status 503 on attempt 1: Expected status 200, got 503
+[2026-06-28 22:59:24] WARNING [monitor.checker:98] Service 'VoyageAI Backend' returned unexpected status 503 on attempt 2: Expected status 200, got 503
+[2026-06-28 22:59:32] WARNING [monitor.checker:98] Service 'VoyageAI Backend' returned unexpected status 503 on attempt 3: Expected status 200, got 503
+[2026-06-28 22:59:32] ERROR [monitor.checker:129] Service 'VoyageAI Backend' health check failed. Reason: Expected status 200, got 503. Retries: 3
+[2026-06-28 22:59:32] WARNING [healthping:85] Detected 1 service failures. Dispatching alerts...
+[2026-06-28 22:59:35] ERROR [notifications.email_sender:79] Failed to dispatch SMTP email: (530, b'5.7.0 Authentication Required. For more information, go to\n5.7.0  https://support.google.com/accounts/troubleshooter/2402620. 5a478bee46e88-30c7c8afc91sm39380783eec.14 - gsmtp', 'your_email@gmail.com')
+Traceback (most recent call last):
+  File "E:\Projects\HealthPing\notifications\email_sender.py", line 73, in _send_email
+    server.sendmail(
+  File "C:\Users\SATYABARTA\AppData\Roaming\uv\python\cpython-3.12.12-windows-x86_64-none\Lib\smtplib.py", line 876, in sendmail
+    raise SMTPSenderRefused(code, resp, from_addr)
+smtplib.SMTPSenderRefused: (530, b'5.7.0 Authentication Required. For more information, go to\n5.7.0  https://support.google.com/accounts/troubleshooter/2402620. 5a478bee46e88-30c7c8afc91sm39380783eec.14 - gsmtp', 'your_email@gmail.com')
+[2026-06-28 22:59:35] ERROR [notifications.email_sender:94] Could not construct/send failure alert: (530, b'5.7.0 Authentication Required. For more information, go to\n5.7.0  https://support.google.com/accounts/troubleshooter/2402620. 5a478bee46e88-30c7c8afc91sm39380783eec.14 - gsmtp', 'your_email@gmail.com')
+[2026-06-28 22:59:55] WARNING [monitor.checker:98] Service 'VoyageAI Backend' returned unexpected status 503 on attempt 0: Expected status 200, got 503
+[2026-06-28 22:59:57] WARNING [monitor.checker:98] Service 'VoyageAI Backend' returned unexpected status 503 on attempt 1: Expected status 200, got 503
+[2026-06-28 23:00:01] WARNING [monitor.checker:98] Service 'VoyageAI Backend' returned unexpected status 503 on attempt 2: Expected status 200, got 503
+[2026-06-28 23:00:10] WARNING [monitor.checker:98] Service 'VoyageAI Backend' returned unexpected status 503 on attempt 3: Expected status 200, got 503
+[2026-06-28 23:00:10] ERROR [monitor.checker:129] Service 'VoyageAI Backend' health check failed. Reason: Expected status 200, got 503. Retries: 3
+[2026-06-28 23:00:10] WARNING [healthping:85] Detected 1 service failures. Dispatching alerts...
+[2026-06-28 23:00:12] ERROR [notifications.email_sender:79] Failed to dispatch SMTP email: (530, b'5.7.0 Authentication Required. For more information, go to\n5.7.0  https://support.google.com/accounts/troubleshooter/2402620. 5a478bee46e88-30c7c9e220bsm40049722eec.21 - gsmtp', 'your_email@gmail.com')
+Traceback (most recent call last):
+  File "E:\Projects\HealthPing\notifications\email_sender.py", line 73, in _send_email
+    server.sendmail(
+  File "C:\Users\SATYABARTA\AppData\Roaming\uv\python\cpython-3.12.12-windows-x86_64-none\Lib\smtplib.py", line 876, in sendmail
+    raise SMTPSenderRefused(code, resp, from_addr)
+smtplib.SMTPSenderRefused: (530, b'5.7.0 Authentication Required. For more information, go to\n5.7.0  https://support.google.com/accounts/troubleshooter/2402620. 5a478bee46e88-30c7c9e220bsm40049722eec.21 - gsmtp', 'your_email@gmail.com')
+[2026-06-28 23:00:12] ERROR [notifications.email_sender:94] Could not construct/send failure alert: (530, b'5.7.0 Authentication Required. For more information, go to\n5.7.0  https://support.google.com/accounts/troubleshooter/2402620. 5a478bee46e88-30c7c9e220bsm40049722eec.21 - gsmtp', 'your_email@gmail.com')
+[2026-06-28 23:00:58] WARNING [monitor.checker:98] Service 'VoyageAI Backend' returned unexpected status 503 on attempt 0: Expected status 200, got 503
+[2026-06-28 23:01:01] WARNING [monitor.checker:98] Service 'VoyageAI Backend' returned unexpected status 503 on attempt 1: Expected status 200, got 503
+[2026-06-28 23:01:05] WARNING [monitor.checker:98] Service 'VoyageAI Backend' returned unexpected status 503 on attempt 2: Expected status 200, got 503
+[2026-06-28 23:01:13] WARNING [monitor.checker:98] Service 'VoyageAI Backend' returned unexpected status 503 on attempt 3: Expected status 200, got 503
+[2026-06-28 23:01:13] ERROR [monitor.checker:129] Service 'VoyageAI Backend' health check failed. Reason: Expected status 200, got 503. Retries: 3
+[2026-06-28 23:01:13] WARNING [healthping:85] Detected 1 service failures. Dispatching alerts...
+[2026-06-28 23:01:15] ERROR [notifications.email_sender:79] Failed to dispatch SMTP email: (530, b'5.7.0 Authentication Required. For more information, go to\n5.7.0  https://support.google.com/accounts/troubleshooter/2402620. 5a478bee46e88-30c7c52c664sm42183169eec.8 - gsmtp', 'your_email@gmail.com')
+Traceback (most recent call last):
+  File "E:\Projects\HealthPing\notifications\email_sender.py", line 73, in _send_email
+    server.sendmail(
+  File "C:\Users\SATYABARTA\AppData\Roaming\uv\python\cpython-3.12.12-windows-x86_64-none\Lib\smtplib.py", line 876, in sendmail
+    raise SMTPSenderRefused(code, resp, from_addr)
+smtplib.SMTPSenderRefused: (530, b'5.7.0 Authentication Required. For more information, go to\n5.7.0  https://support.google.com/accounts/troubleshooter/2402620. 5a478bee46e88-30c7c52c664sm42183169eec.8 - gsmtp', 'your_email@gmail.com')
+[2026-06-28 23:01:15] ERROR [notifications.email_sender:94] Could not construct/send failure alert: (530, b'5.7.0 Authentication Required. For more information, go to\n5.7.0  https://support.google.com/accounts/troubleshooter/2402620. 5a478bee46e88-30c7c52c664sm42183169eec.8 - gsmtp', 'your_email@gmail.com')
+[2026-06-28 23:12:00] WARNING [monitor.checker:98] Service 'VoyageAI Backend' returned unexpected status 503 on attempt 0: Expected status 200, got 503
+[2026-06-28 23:12:03] WARNING [monitor.checker:98] Service 'VoyageAI Backend' returned unexpected status 503 on attempt 1: Expected status 200, got 503
+[2026-06-28 23:12:07] WARNING [monitor.checker:98] Service 'VoyageAI Backend' returned unexpected status 503 on attempt 2: Expected status 200, got 503
+[2026-06-28 23:12:15] WARNING [monitor.checker:98] Service 'VoyageAI Backend' returned unexpected status 503 on attempt 3: Expected status 200, got 503
+[2026-06-28 23:12:15] ERROR [monitor.checker:129] Service 'VoyageAI Backend' health check failed. Reason: Expected status 200, got 503. Retries: 3
+[2026-06-28 23:12:15] WARNING [healthping:85] Detected 1 service failures. Dispatching alerts...
+[2026-06-28 23:43:39] WARNING [monitor.checker:98] Service 'test 1' returned unexpected status 404 on attempt 0: Expected status 200, got 404
+[2026-06-28 23:43:39] WARNING [monitor.checker:98] Service 'test 2' returned unexpected status 404 on attempt 0: Expected status 200, got 404
+[2026-06-28 23:43:42] WARNING [monitor.checker:98] Service 'test 2' returned unexpected status 404 on attempt 1: Expected status 200, got 404
+[2026-06-28 23:43:42] WARNING [monitor.checker:98] Service 'test 1' returned unexpected status 404 on attempt 1: Expected status 200, got 404
+[2026-06-28 23:43:46] WARNING [monitor.checker:98] Service 'test 2' returned unexpected status 404 on attempt 2: Expected status 200, got 404
+[2026-06-28 23:43:46] WARNING [monitor.checker:98] Service 'test 1' returned unexpected status 404 on attempt 2: Expected status 200, got 404
+[2026-06-28 23:43:54] WARNING [monitor.checker:98] Service 'test 2' returned unexpected status 404 on attempt 3: Expected status 200, got 404
+[2026-06-28 23:43:54] ERROR [monitor.checker:129] Service 'test 2' health check failed. Reason: Expected status 200, got 404. Retries: 3
+[2026-06-28 23:43:54] WARNING [monitor.checker:98] Service 'test 1' returned unexpected status 404 on attempt 3: Expected status 200, got 404
+[2026-06-28 23:43:54] ERROR [monitor.checker:129] Service 'test 1' health check failed. Reason: Expected status 200, got 404. Retries: 3
