@@ -25,7 +25,7 @@ HealthPing is built using clean architecture, SOLID design principles, and separ
 HealthPing/
 ├── .github/
 │   └── workflows/
-│       ├── health-check.yml     # Runs every 10 min, sends failure alerts
+│       ├── health-check.yml     # Runs every 10 min, sends unified status email
 │       ├── daily-report.yml     # Runs daily, sends 24h summary
 │       └── weekly-report.yml    # Runs weekly, sends 7d summary
 ├── config/
@@ -52,20 +52,12 @@ HealthPing/
 │   ├── __init__.py
 │   └── generator.py             # CSV/JSON/HTML file writers & History Aggregator
 ├── templates/
-│   ├── report_template.html     # HTML dashboard dashboard
-│   ├── email_alert.html         # Outage alarm template
+│   ├── report_template.html     # HTML dashboard template
+│   ├── email_status.html        # Unified status update template
 │   ├── daily_report.html        # Daily summary email template
 │   └── weekly_report.html       # Weekly summary email template
-├── tests/
-│   ├── test_config.py           # Config loader tests
-│   ├── test_monitor.py          # Health checker tests
-│   ├── test_retry.py            # Retry & backoff tests
-│   ├── test_reports.py          # CSV/JSON/HTML report tests
-│   └── test_notifications.py    # Email & SMTP tests
 ├── main.py                      # Orchestrator CLI entrypoint
-├── pyproject.toml               # Package dependencies & test configurations
 ├── requirements.txt             # Flat dependency file
-├── uv.lock                      # Resolved dependency tree lock
 └── README.md
 ```
 

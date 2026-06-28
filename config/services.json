@@ -11,7 +11,7 @@
             "notify_on_failure": true
         },
         {
-            "name": "Email Automation Tool",
+            "name": "Email Automation Tool Backend",
             "url": "https://automated-email-sender.onrender.com/",
             "method": "GET",
             "timeout": 60,
@@ -51,7 +51,7 @@
             "notify_on_failure": true
         },
         {
-            "name": "Netflix Clone Backend",
+            "name": "Netflix Backend",
             "url": "https://netflix-clone-1pu9.onrender.com/",
             "method": "GET",
             "timeout": 60,
