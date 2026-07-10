@@ -1,6 +1,16 @@
 {
     "services": [
         {
+            "name": "TruthLens Backend",
+            "url": "https://truthlens-backend-87l8.onrender.com/",
+            "method": "GET",
+            "timeout": 60,
+            "retries": 3,
+            "expected_status": 200,
+            "enabled": true,
+            "notify_on_failure": true
+        },
+        {
             "name": "VoyageAI Backend",
             "url": "https://voyageai-backend-rg03.onrender.com/",
             "method": "GET",
