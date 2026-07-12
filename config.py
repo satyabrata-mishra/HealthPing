@@ -1,0 +1,62 @@
+SERVICES = [
+    {
+        "name": "TruthLens Backend",
+        "url": "https://truthlens-backend-87l8.onrender.com/",
+        "method": "GET",
+        "timeout": 60,
+        "retries": 3,
+        "expected_status": 200,
+    },
+    {
+        "name": "VoyageAI Backend",
+        "url": "https://voyageai-backend-rg03.onrender.com/",
+        "method": "GET",
+        "timeout": 60,
+        "retries": 3,
+        "expected_status": 200,
+    },
+    {
+        "name": "Email Automation Tool Backend",
+        "url": "https://automated-email-sender.onrender.com/",
+        "method": "GET",
+        "timeout": 60,
+        "retries": 3,
+        "expected_status": 200,
+    },
+    {
+        "name": "Memories Application Backend",
+        "url": "https://blog-application-0j9b.onrender.com/",
+        "method": "GET",
+        "timeout": 60,
+        "retries": 3,
+        "expected_status": 200,
+    },
+    {
+        "name": "Attendance Manager App Backend",
+        "url": "https://attendance-manager-app.onrender.com/",
+        "method": "GET",
+        "timeout": 60,
+        "retries": 3,
+        "expected_status": 200,
+    },
+    {
+        "name": "Chatroom and Videoroom Backend",
+        "url": "https://chat-app-ll19.onrender.com/",
+        "method": "GET",
+        "timeout": 60,
+        "retries": 3,
+        "expected_status": 200,
+    },
+    {
+        "name": "Netflix Backend",
+        "url": "https://netflix-clone-1pu9.onrender.com/",
+        "method": "GET",
+        "timeout": 60,
+        "retries": 3,
+        "expected_status": 200,
+    },
+]
+
+# Global settings
+CONCURRENCY = 10
+RETRY_DELAY = 2

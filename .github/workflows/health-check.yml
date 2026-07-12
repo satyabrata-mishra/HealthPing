@@ -2,8 +2,8 @@ name: HealthPing Check
 
 on:
   schedule:
-    # Every 3 hours
-    - cron: "0 */3 * * *"
+    # Every 15 minutes
+    - cron: "*/15 * * * *"
 
   workflow_dispatch:
 
@@ -39,21 +39,8 @@ jobs:
         run: uv sync --frozen
 
       - name: Run Health Checks
-        env:
-          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
-          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
         run: |
-          uv run python main.py --mode check
-
-      - name: Upload Reports
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: healthping-health-reports
-          path: report_outputs/
-          if-no-files-found: ignore
-          retention-days: 7
+          uv run python main.py
 
       - name: Workflow Summary
         if: always()

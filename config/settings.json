@@ -1,9 +1,0 @@
-{
-    "concurrency": 10,
-    "default_timeout": 60,
-    "retry_delay": 2,
-    "log_level": "INFO",
-    "generate_html_report": false,
-    "generate_csv_report": false,
-    "generate_json_report": false
-}
