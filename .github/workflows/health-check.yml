@@ -2,8 +2,9 @@ name: HealthPing Check
 
 on:
   schedule:
-    # Every 10 minutes
-    - cron: "*/10 * * * *"
+    # Every 5 hrs
+    - cron: "0 */5 * * *"
+
 
   workflow_dispatch:
 
